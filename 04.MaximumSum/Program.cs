@@ -16,7 +16,7 @@ class MaximalSum
         {
             matrix[i] = Console.ReadLine()?.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
         }
-        var resultMatrix = new int[3, 3];
+
         var maxSum = int.MinValue;
 
         var firstRowResult = string.Empty;
