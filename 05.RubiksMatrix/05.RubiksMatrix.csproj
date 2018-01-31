@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5C844551-A785-496C-9F2A-E3149E3E069B}</ProjectGuid>
+    <ProjectGuid>{4FB2DE33-D574-4F1C-B967-21E4A546929E}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>_04.MaximumSum</RootNamespace>
-    <AssemblyName>04.MaximumSum</AssemblyName>
+    <RootNamespace>_05.RubiksMatrix</RootNamespace>
+    <AssemblyName>05.RubiksMatrix</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -42,7 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MaximalSum.cs" />
+    <Compile Include="RubiksMatrix.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2008
+VisualStudioVersion = 15.0.27130.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01.MatrixOfPalindromes", "01.MatrixOfPalindromes\01.MatrixOfPalindromes.csproj", "{B80C0DDB-8BD1-4DC7-973F-68D16EA96578}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03.2x2SquaresInMatrix", "03.2x2SquaresInMatrix\03.2x2SquaresInMatrix.csproj", "{69EFCE9C-4644-45BE-9ED6-3DC9DE59A81F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "04.MaximumSum", "04.MaximumSum\04.MaximumSum.csproj", "{5C844551-A785-496C-9F2A-E3149E3E069B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "05.RubiksMatrix", "05.RubiksMatrix\05.RubiksMatrix.csproj", "{4FB2DE33-D574-4F1C-B967-21E4A546929E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{5C844551-A785-496C-9F2A-E3149E3E069B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C844551-A785-496C-9F2A-E3149E3E069B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C844551-A785-496C-9F2A-E3149E3E069B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FB2DE33-D574-4F1C-B967-21E4A546929E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FB2DE33-D574-4F1C-B967-21E4A546929E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FB2DE33-D574-4F1C-B967-21E4A546929E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FB2DE33-D574-4F1C-B967-21E4A546929E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
