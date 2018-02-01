@@ -59,13 +59,7 @@ class RubiksMatrix
         {
             case "right":                           // (index + turns) % length
 
-                for (int i = 0; i < newRow.Length; i++) 
-                {
-
-
-
-
-                }
+               
 
 
                 break;
