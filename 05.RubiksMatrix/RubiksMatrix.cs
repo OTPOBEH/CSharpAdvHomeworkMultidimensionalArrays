@@ -9,6 +9,7 @@ class RubiksMatrix
     static void Main()
     {
         var size = Console.ReadLine()?.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
+        var commands = int.Parse(Console.ReadLine());
 
         var rows = size[0];
         var columns = size[1];
@@ -23,10 +24,66 @@ class RubiksMatrix
             }
         }
 
+        for (int i = 0; i < commands; i++)
+        {
+            var command = Console.ReadLine()?.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(x => x.Trim())
+                .ToArray();
+            var position = int.Parse(command[0]);
+            var direction = command[1];
+            var times = int.Parse(command[2]);
 
+            if (direction == "left" || direction == "right")
+            {
+                RowTurning(matrix, position, times, direction);
+            }
+            else
+            {
+                ColTurning(matrix, position, times, direction);
+            }
+
+
+
+
+        }
 
 
 
 
     }
+    static void RowTurning(int[,] matrix, int position, int times, string direction)
+    {
+        var newRow = new int[matrix.GetLength(1)];
+        
+        switch (direction)
+        {
+            case "right":                           // (index + turns) % length
+
+                for (int i = 0; i < newRow.Length; i++) 
+                {
+
+
+
+
+                }
+
+
+                break;
+            case "left":                            // index - Length % turns
+
+
+
+                break;
+
+
+        }
+    }
+
+    static void ColTurning(int[,] matrix, int position, int times, string direction)
+    {
+
+
+
+    }
+
 }
