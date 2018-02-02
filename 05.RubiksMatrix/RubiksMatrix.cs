@@ -45,27 +45,26 @@ class RubiksMatrix
             }
         }
 
-        for (int i = 0; i < matrix.GetLength(0); i++)
-        {
-            for (int j = 0; j < matrix.GetLength(1); j++)
-            {
+        //for (int i = 0; i < matrix.GetLength(0); i++)
+        //{
+        //    for (int j = 0; j < matrix.GetLength(1); j++)
+        //    {
 
-                if (matrix[i,j] != originalMatrix[i,j])
-                {
-
-                    var coordinates = FindCoordinates(matrix, matrix[i, j]);
-                    var row = coordinates.Item1;
-                    var col = coordinates.Item2;
-
-
-
-                }
+        //        if (matrix[i,j] != originalMatrix[i,j])
+        //        {
+        //            var coordinates = FindCoordinates(matrix, matrix[i, j]);
+        //            var row = coordinates.Item1;
+        //            var col = coordinates.Item2;
 
 
 
+        //        }
 
-            }
-        }
+
+
+
+        //    }
+        //}
 
 
     }
@@ -76,11 +75,11 @@ class RubiksMatrix
         switch (direction)
         {
             case "right":
-                index = (0 + turns) % matrix.GetLength(1);
+                index = turns % matrix.GetLength(1) - 1;
                 break;
 
             case "left":
-                index = (matrix.GetLength(1) - 1) - turns % matrix.GetLength(1);
+                index = (matrix.GetLength(1) - 1 - turns % matrix.GetLength(1));
                 break;
         }
 
@@ -88,8 +87,8 @@ class RubiksMatrix
 
         //Получаване на новия ред на матрицата:
         const int intSize = 4; //на толковa байта отговаря един int
-        Buffer.BlockCopy(matrix, (position * newRow.Length + index) * intSize, newRow, 0, (newRow.Length - index) * intSize);
-        Buffer.BlockCopy(matrix, position * newRow.Length * intSize, newRow, (index + 1) * intSize, index * intSize);
+        Buffer.BlockCopy(matrix, (position * newRow.Length + index + 1) * intSize, newRow, 0, (newRow.Length - index - 1) * intSize); // OK e
+        Buffer.BlockCopy(matrix, position * newRow.Length * intSize, newRow, index * intSize, turns); // index - 1 
 
         //Копиране на новия ред обратно в матрицата:
         Buffer.BlockCopy(newRow, 0, matrix, position * newRow.Length * intSize, newRow.Length * intSize);
@@ -127,34 +126,34 @@ class RubiksMatrix
         }
     }
 
-    static Tuple<int, int , bool> FindCoordinates(int[,] matrix, int quiery)
-    {
-        for (int i = 0; i < matrix.GetLength(0); i++)
-        {
-            for (int j = 0; j < matrix.GetLength(1); j++)
-            {
+    //static Tuple<int, int , bool> FindCoordinates(int[,] matrix, int quiery)
+    //{
+    //    for (int i = 0; i < matrix.GetLength(0); i++)
+    //    {
+    //        for (int j = 0; j < matrix.GetLength(1); j++)
+    //        {
 
-                if (matrix[i, j] != originalMatrix[i, j])
-                {
-
-
-
-
-                }
+    //            if (matrix[i, j] != originalMatrix[i, j])
+    //            {
 
 
 
 
-            }
-        }
+    //            }
 
 
+
+
+    //        }
+    //    }
 
 
 
 
 
-    }
+
+
+    //}
 
 
 
