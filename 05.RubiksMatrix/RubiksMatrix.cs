@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 class RubiksMatrix
 {
@@ -45,50 +42,44 @@ class RubiksMatrix
             }
         }
 
-        //for (int i = 0; i < matrix.GetLength(0); i++)
-        //{
-        //    for (int j = 0; j < matrix.GetLength(1); j++)
-        //    {
+        for (int i = 0; i < matrix.GetLength(0); i++)
+        {
+            for (int j = 0; j < matrix.GetLength(1); j++)
+            {
+                var result = SolveSwaps(i, j, matrix, originalMatrix);
 
-        //        if (matrix[i,j] != originalMatrix[i,j])
-        //        {
-        //            var coordinates = FindCoordinates(matrix, matrix[i, j]);
-        //            var row = coordinates.Item1;
-        //            var col = coordinates.Item2;
-
-
-
-        //        }
-
-
-
-
-        //    }
-        //}
-
-
+                Console.WriteLine(result);
+            }
+        }
     }
     static void TurnRow(int[,] matrix, int position, int turns, string direction)
     {
+        //Хоризонтално завъртане.
+        //Пример:
+        // начална матица = 1 2 3 4 5
+        // Команда: Едно преместване на дясно - > ако срежем матицата след индекс 3 (1 2 3 4 | 5) и разменим местата на двете парчета ще получим:
+        // резултанта матица = 5 1 2 3 4;
+
+        //Сега изчисляваме къде трябва да срежем матицата, за да разменим местата на двете парчета:
+
         var index = 0;
 
         switch (direction)
         {
             case "right":
-                index = turns % matrix.GetLength(1) - 1;
+                index = matrix.GetLength(1) - turns % matrix.GetLength(1); // търсеният индекс при команда "дясно"
                 break;
 
             case "left":
-                index = (matrix.GetLength(1) - 1 - turns % matrix.GetLength(1));
+                index = turns % matrix.GetLength(1);// търсеният индекс при команда "ляво"
                 break;
         }
 
+        //Получаване новия ред на матрицата чрез копиране на матрица байт по байт(всеки Int е 4 байта)
         var newRow = new int[matrix.GetLength(1)];
-
-        //Получаване на новия ред на матрицата:
-        const int intSize = 4; //на толковa байта отговаря един int
-        Buffer.BlockCopy(matrix, (position * newRow.Length + index + 1) * intSize, newRow, 0, (newRow.Length - index - 1) * intSize); // OK e
-        Buffer.BlockCopy(matrix, position * newRow.Length * intSize, newRow, index * intSize, turns); // index - 1 
+        const int intSize = 4;
+        Buffer.BlockCopy(matrix, (position * newRow.Length + index) * intSize, newRow, 0, (newRow.Length - index) * intSize);
+        Buffer.BlockCopy(matrix, position * newRow.Length * intSize, newRow, (newRow.Length - index) * intSize, index * intSize);
 
         //Копиране на новия ред обратно в матрицата:
         Buffer.BlockCopy(newRow, 0, matrix, position * newRow.Length * intSize, newRow.Length * intSize);
@@ -96,65 +87,65 @@ class RubiksMatrix
 
     static void TurnCol(int[,] matrix, int position, int turns, string direction)
     {
+        //За обяснение на алгоритъма виж метод TurnRow по-горе...
         var index = 0;
 
         switch (direction)
         {
             case "down":
-                index = (0 + turns) % matrix.GetLength(1);
+                index = matrix.GetLength(0) - turns % matrix.GetLength(0);
                 break;
 
             case "up":
-                index = (matrix.GetLength(1) - 1) - turns % matrix.GetLength(1);
+                index = turns % matrix.GetLength(0);
                 break;
         }
 
         var oldCol = new int[matrix.GetLength(0)];
-        var newCol = new int[matrix.GetLength(0)];
 
         for (int i = 0; i < oldCol.Length; i++)
         {
             oldCol[i] = matrix[i, position];
         }
-        const int intSize = 4; //на толковa байта отговаря един int
-        Buffer.BlockCopy(oldCol, 0, newCol, (index + 1) * intSize, index * intSize);
-        Buffer.BlockCopy(oldCol, (index) * intSize, newCol, 0, (newCol.Length - index) * intSize);
 
+        //Получаване новия ред на матрицата:
+        var newCol = new int[matrix.GetLength(0)];
+        const int intSize = 4; //на толковa байта отговаря един int
+        Buffer.BlockCopy(oldCol, (index) * intSize, newCol, 0, (newCol.Length - index) * intSize); //това е копиране байт по байт
+        Buffer.BlockCopy(oldCol, 0, newCol, (newCol.Length - index) * intSize, index * intSize);
+
+        //Копиране на новия ред обратно в матрицата:
         for (int i = 0; i < newCol.Length; i++)
         {
             matrix[i, position] = newCol[i];
         }
     }
 
-    //static Tuple<int, int , bool> FindCoordinates(int[,] matrix, int quiery)
-    //{
-    //    for (int i = 0; i < matrix.GetLength(0); i++)
-    //    {
-    //        for (int j = 0; j < matrix.GetLength(1); j++)
-    //        {
+    static string SolveSwaps(int i, int j, int[,] matrix, int[,] originalMatrix)
+    {
+        var result = string.Empty;
+        if (matrix[i, j] != originalMatrix[i, j])
+        {
+            for (int k = i; k < matrix.GetLength(0); k++)
+            {
+                for (int m = j + 1; m < matrix.GetLength(1); m++)
+                {
+                    if (originalMatrix[i, j] == matrix[k, m])
+                    {
+                        var temp = matrix[i, j];
+                        matrix[i, j] = originalMatrix[i, j];
+                        matrix[k, m] = temp;
+                        result = $"Swap [{i},{j}] with [{k},{m}]";
+                        break;
+                    }
+                }
+            }
+        }
+        else
+        {
+            result = "No swap required";
+        }
 
-    //            if (matrix[i, j] != originalMatrix[i, j])
-    //            {
-
-
-
-
-    //            }
-
-
-
-
-    //        }
-    //    }
-
-
-
-
-
-
-
-    //}
-
-
-
+        return result;
+    }
 }
