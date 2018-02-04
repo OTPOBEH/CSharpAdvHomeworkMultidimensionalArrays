@@ -59,13 +59,14 @@ class RubiksMatrix
     }
     static void TurnRow(int[,] matrix, int position, int turns, string direction)
     {
-        //Хоризонтално завъртане.
-        //Пример:
-        // начална матица = 1 2 3 4 5
-        // Команда: Едно преместване на дясно - > ако срежем масива след индекс 3 (1 2 3 4 | 5) и разменим местата на двете парчета ще получим:
-        // резултат масив = 5 1 2 3 4;
+        // Хоризонтално завъртане.
+        // Пример:
+        // начален масив: 1 2 3 4 5
+        // Команда: Две премествания на дясно.
+        // Ако срежем масива преди индекс 3 (1 2 3 | 4 5) и разменим местата на двете парчета ще получим:
+        // резултат масив: 4 5 1 2 3
 
-        //Сега изчисляваме къде трябва да срежем матицата, за да разменим местата на двете парчета:
+        //Сега изчисляваме къде трябва да срежем масива, за да разменим местата на двете парчета:
 
         var index = 0;
 
@@ -80,11 +81,11 @@ class RubiksMatrix
                 break;
         }
 
-        //Получаване новия ред на матрицата чрез копиране на матрица байт по байт(всеки int е 4 байта)
+        //Получаване новия ред на матрицата чрез копиране на матрица байт по байт(всеки int е 4 байта) с Buffer.BlockCopy:
         var newRow = new int[matrix.GetLength(1)];
         const int intSize = 4;
-        Buffer.BlockCopy(matrix, (position * newRow.Length + index) * intSize, newRow, 0, (newRow.Length - index) * intSize);
-        Buffer.BlockCopy(matrix, position * newRow.Length * intSize, newRow, (newRow.Length - index) * intSize, index * intSize);
+        Buffer.BlockCopy(matrix, (position * newRow.Length + index) * intSize, newRow, 0, (newRow.Length - index) * intSize); // Вторият отрязък отива отпред.
+        Buffer.BlockCopy(matrix, position * newRow.Length * intSize, newRow, (newRow.Length - index) * intSize, index * intSize); // Първият отрязък отива отзад.
 
         //Копиране на новия ред обратно в матрицата:
         Buffer.BlockCopy(newRow, 0, matrix, position * newRow.Length * intSize, newRow.Length * intSize);
