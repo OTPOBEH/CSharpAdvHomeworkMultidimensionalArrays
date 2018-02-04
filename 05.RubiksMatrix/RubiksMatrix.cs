@@ -45,11 +45,16 @@ class RubiksMatrix
         for (int i = 0; i < matrix.GetLength(0); i++)
         {
             for (int j = 0; j < matrix.GetLength(1); j++)
-            {
-                var result = SolveSwaps(i, j, matrix, originalMatrix);
 
-                Console.WriteLine(result);
-            }
+                if (matrix[i, j] == originalMatrix[i, j])
+                {
+                    Console.WriteLine("No swap required");
+                }
+                else
+                {
+                    var result = SwapSolver(i, j, matrix, originalMatrix);
+                    Console.WriteLine(result);
+                }
         }
     }
     static void TurnRow(int[,] matrix, int position, int turns, string direction)
@@ -57,8 +62,8 @@ class RubiksMatrix
         //Хоризонтално завъртане.
         //Пример:
         // начална матица = 1 2 3 4 5
-        // Команда: Едно преместване на дясно - > ако срежем матицата след индекс 3 (1 2 3 4 | 5) и разменим местата на двете парчета ще получим:
-        // резултанта матица = 5 1 2 3 4;
+        // Команда: Едно преместване на дясно - > ако срежем масива след индекс 3 (1 2 3 4 | 5) и разменим местата на двете парчета ще получим:
+        // резултат масив = 5 1 2 3 4;
 
         //Сега изчисляваме къде трябва да срежем матицата, за да разменим местата на двете парчета:
 
@@ -75,7 +80,7 @@ class RubiksMatrix
                 break;
         }
 
-        //Получаване новия ред на матрицата чрез копиране на матрица байт по байт(всеки Int е 4 байта)
+        //Получаване новия ред на матрицата чрез копиране на матрица байт по байт(всеки int е 4 байта)
         var newRow = new int[matrix.GetLength(1)];
         const int intSize = 4;
         Buffer.BlockCopy(matrix, (position * newRow.Length + index) * intSize, newRow, 0, (newRow.Length - index) * intSize);
@@ -101,7 +106,7 @@ class RubiksMatrix
                 break;
         }
 
-        var oldCol = new int[matrix.GetLength(0)];
+        var oldCol = new int[matrix.GetLength(0)]; // Създаваме временен масив със състоянието на колоната преди промените
 
         for (int i = 0; i < oldCol.Length; i++)
         {
@@ -121,31 +126,28 @@ class RubiksMatrix
         }
     }
 
-    static string SolveSwaps(int i, int j, int[,] matrix, int[,] originalMatrix)
+    static string SwapSolver(int i, int j, int[,] matrix, int[,] originalMatrix)
     {
         var result = string.Empty;
-        if (matrix[i, j] != originalMatrix[i, j])
+        var firstPass = true;
+        for (int k = i; k < matrix.GetLength(0); k++)
         {
-            for (int k = i; k < matrix.GetLength(0); k++)
+            var m = 0;
+            if (firstPass) m = j;   //При първа итерация започваме долния цикъл директно от елемента, който проверяваме.
+
+            for ( ;m < matrix.GetLength(1); m++)
             {
-                for (int m = j + 1; m < matrix.GetLength(1); m++)
+                if (originalMatrix[i, j] == matrix[k, m])
                 {
-                    if (originalMatrix[i, j] == matrix[k, m])
-                    {
-                        var temp = matrix[i, j];
-                        matrix[i, j] = originalMatrix[i, j];
-                        matrix[k, m] = temp;
-                        result = $"Swap [{i},{j}] with [{k},{m}]";
-                        break;
-                    }
+                    var temp = matrix[i, j];
+                    matrix[i, j] = originalMatrix[i, j];
+                    matrix[k, m] = temp;
+                    result = $"Swap ({i}, {j}) with ({k}, {m})";
+                    break;
                 }
             }
+            firstPass = false;
         }
-        else
-        {
-            result = "No swap required";
-        }
-
         return result;
     }
 }
