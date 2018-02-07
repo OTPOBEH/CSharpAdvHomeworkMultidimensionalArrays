@@ -60,9 +60,11 @@ namespace TargetPractice
             //    }
             //    Console.WriteLine();
             //}
-            //Точка М в четириъгълник ABCD:
-            //М е в ABCD ако:
-            //(0 < AM⋅AB < AB⋅AB) && (0 < AM⋅AD < AD⋅AD), които са векторни произведения
+
+            
+            
+
+
 
 
 
