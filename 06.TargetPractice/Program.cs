@@ -8,34 +8,32 @@ namespace TargetPractice
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             var size = Console.ReadLine().Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToArray();
-            var rows = int.Parse(size[0]);
-            var cols = int.Parse(size[1]);
 
-            var wall = new char[rows, cols];
 
             var snake = Console.ReadLine().ToCharArray();
 
             var shot = Console.ReadLine().Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
-            var impactRow = shot[0];
-            var impactCol = shot[1];
-            var impactRad = shot[2];
+
+            var radius = shot[2];
+            var impactRow = shot[0] + radius;
+            var impactCol = shot[1] + radius;
+
+            var rows = int.Parse(size[0]) + 2 * radius;
+            var cols = int.Parse(size[1]) + 2 * radius;
+
+            var wall = new char[rows, cols];
 
             var isEven = true;
             var counter = 0;
 
-            var A = new Tuple<int, int>(impactRow, impactCol - impactRad);
-            var B = new Tuple<int, int>(impactRow - impactRad, impactCol);
-            var C = new Tuple<int, int>(impactRow, impactCol + impactRad);
-            var D = new Tuple<int, int>(impactRow + impactRad, impactCol);
-
-            for (int i = rows - 1; i >= 0; i--)
+            for (int i = rows - 1 - radius; i >= radius; i--)
             {
                 if (isEven)
                 {
-                    for (int j = cols - 1; j >= 0; j--)
+                    for (int j = cols - 1 - radius; j >= 0 + radius; j--)
                     {
                         wall[i, j] = snake[counter % snake.Length];
                         counter++;
@@ -44,7 +42,7 @@ namespace TargetPractice
                 }
                 else
                 {
-                    for (int j = 0; j < cols; j++)
+                    for (int j = 0 + radius; j < cols - radius; j++)
                     {
                         wall[i, j] = snake[counter % snake.Length];
                         counter++;
@@ -52,24 +50,67 @@ namespace TargetPractice
                     isEven = true;
                 }
             }
-            //for (int i = 0; i < rows; i++)
-            //{
-            //    for (int j = 0; j < cols; j++)
-            //    {
-            //        Console.Write(wall[i,j]);
-            //    }
-            //    Console.WriteLine();
-            //}
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    Console.Write(wall[i, j]);
+                }
+                Console.WriteLine();
+            }
 
-            
-            
+            var startCol = impactCol;
+            var elements = 0;
 
+            for (int row = impactRow - radius; row <= impactRow; row++)
+            {
+                for (var col = startCol; col <= startCol + elements; col++)
+                {
+                    wall[row, col] = wall[0, 0];
+                }
+                elements += 2;
+                startCol--;
+            }
+            elements = 2 * radius + 1;
+            startCol++;
 
+            for (int row = impactRow + 1; row <= impactRow + radius; row++)
+            {
 
+                startCol++;
+                elements -= 2;
 
+                for (var col = startCol; col < startCol + elements; col++)
+                {
+
+                    wall[row, col] = wall[0, 0];
+
+                }
+            }
 
             Console.WriteLine();
 
+            for (int col = radius; col < cols - radius; col++)
+            {
+                for (int row = rows - radius; row >= radius; row--)
+                {
+
+                    if (wall[row, col] == wall[0, 0])
+                    {
+
+
+
+
+
+                    }
+
+
+
+                }
+
+
+
+
+            }
         }
     }
-}
