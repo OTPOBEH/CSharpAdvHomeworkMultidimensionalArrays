@@ -50,6 +50,9 @@ namespace TargetPractice
                 }
                 Console.WriteLine();
             }
+
+            //(0 < AM⋅AB < AB⋅AB) ∧ (0 < AM⋅AD < AD⋅AD)
+
         }
     }
 }
