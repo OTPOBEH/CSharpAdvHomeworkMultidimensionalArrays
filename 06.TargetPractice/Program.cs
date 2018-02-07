@@ -18,8 +18,18 @@ namespace TargetPractice
 
             var snake = Console.ReadLine().ToCharArray();
 
+            var shot = Console.ReadLine().Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
+            var impactRow = shot[0];
+            var impactCol = shot[1];
+            var impactRad = shot[2];
+
             var isEven = true;
             var counter = 0;
+
+            var A = new Tuple<int, int>(impactRow, impactCol - impactRad);
+            var B = new Tuple<int, int>(impactRow - impactRad, impactCol);
+            var C = new Tuple<int, int>(impactRow, impactCol + impactRad);
+            var D = new Tuple<int, int>(impactRow + impactRad, impactCol);
 
             for (int i = rows - 1; i >= 0; i--)
             {
@@ -42,16 +52,21 @@ namespace TargetPractice
                     isEven = true;
                 }
             }
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < cols; j++)
-                {
-                    Console.Write(wall[i,j]);
-                }
-                Console.WriteLine();
-            }
+            //for (int i = 0; i < rows; i++)
+            //{
+            //    for (int j = 0; j < cols; j++)
+            //    {
+            //        Console.Write(wall[i,j]);
+            //    }
+            //    Console.WriteLine();
+            //}
+            //Точка М в четириъгълник ABCD:
+            //М е в ABCD ако:
+            //(0 < AM⋅AB < AB⋅AB) && (0 < AM⋅AD < AD⋅AD), които са векторни произведения
 
-            //(0 < AM⋅AB < AB⋅AB) ∧ (0 < AM⋅AD < AD⋅AD)
+
+
+            Console.WriteLine();
 
         }
     }
