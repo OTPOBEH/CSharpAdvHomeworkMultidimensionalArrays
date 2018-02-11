@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TargetPractice
 {
@@ -15,21 +12,9 @@ namespace TargetPractice
             var cols = int.Parse(size[1]);
 
             var wall = new char[rows, cols];
-
             var snake = Console.ReadLine().ToCharArray();
-
-            var shot = Console.ReadLine().Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
-            var impactRow = shot[0];
-            var impactCol = shot[1];
-            var impactRad = shot[2];
-
             var isEven = true;
             var counter = 0;
-
-            var A = new Tuple<int, int>(impactRow, impactCol - impactRad);
-            var B = new Tuple<int, int>(impactRow - impactRad, impactCol);
-            var C = new Tuple<int, int>(impactRow, impactCol + impactRad);
-            var D = new Tuple<int, int>(impactRow + impactRad, impactCol);
 
             for (int i = rows - 1; i >= 0; i--)
             {
@@ -52,18 +37,41 @@ namespace TargetPractice
                     isEven = true;
                 }
             }
-            //for (int i = 0; i < rows; i++)
-            //{
-            //    for (int j = 0; j < cols; j++)
-            //    {
-            //        Console.Write(wall[i,j]);
-            //    }
-            //    Console.WriteLine();
-            //}
 
-            
-            
+            var shot = Console.ReadLine().Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
+            var impactRow = shot[0];
+            var impactCol = shot[1];
+            var radius = shot[2];
 
+            var topRow = impactRow - radius;
+            var bottomRow = impactRow + radius;
+            var startCol = impactCol;
+            counter = 0;
+
+            for (int row = topRow; row <= impactRow; row++)
+            {
+                for (int col = startCol; row >= 0 && col <= startCol + counter; col++)
+                {
+                    if (col < 0 || col >= wall.GetLength(1)) continue;
+                    wall[row, col] = '\0';
+                }
+                startCol--;
+                counter += 2;
+            }
+
+            counter = 2 * radius - 1;
+            startCol += 2;
+
+            for (int row = impactRow + 1; row < wall.GetLength(0) && row <= bottomRow; row++)
+            {
+                for (int col = startCol; row < wall.GetLength(1) && col < startCol + counter; col++)
+                {
+                    if (col < 0 || col >= wall.GetLength(1)) continue;
+                    wall[row, col] = '\0';
+                }
+                startCol++;
+                counter -= 2;
+            }
 
 
 
