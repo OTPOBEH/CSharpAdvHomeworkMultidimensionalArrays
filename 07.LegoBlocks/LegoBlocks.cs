@@ -14,12 +14,18 @@ class LegoBlocks
 
         for (int row = 0; row < rows; row++)
         {
-            firstMatrix[row] = Console.ReadLine().Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries).Select(x => int.Parse(x.Trim())).ToArray();
+            firstMatrix[row] = Console.ReadLine()
+                .Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(x => int.Parse(x.Trim()))
+                .ToArray();
         }
 
         for (int row = 0; row < rows; row++)
         {
-            secondMatrix[row] = Console.ReadLine().Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries).Select(x => int.Parse(x.Trim())).ToArray();
+            secondMatrix[row] = Console.ReadLine()
+                .Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(x => int.Parse(x.Trim()))
+                .ToArray();
             Array.Reverse(secondMatrix[row]);
         }
 
@@ -38,8 +44,7 @@ class LegoBlocks
         {
             for (int i = 0; i < rows; i++)
             {
-                Console.Write("[" + string.Join(", ", firstMatrix[i]));
-                Console.WriteLine(", " + string.Join(", ", secondMatrix[i]) + "]");
+                Console.WriteLine("[" + string.Join(", ", firstMatrix[i]) + ", " + string.Join(", ", secondMatrix[i]) + "]");
             }
         }
         else
