@@ -40,7 +40,6 @@ class RadioactiveBunnies
         foreach (var command in commands)
         {
             lair[playerRow][playerCol] = '.';
-
             switch (command)
             {
                 case 'L':
@@ -60,7 +59,7 @@ class RadioactiveBunnies
                     else playerRow += 1;
                     break;
             }
-
+            
             if (won || lair[playerRow][playerCol] == 'B') gameOver = true;
             else lair[playerRow][playerCol] = 'P';
 
