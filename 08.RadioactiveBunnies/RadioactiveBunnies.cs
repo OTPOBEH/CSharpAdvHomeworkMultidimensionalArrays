@@ -3,13 +3,13 @@ using System.Linq;
 
 class RadioactiveBunnies
 {
-    static void Main(string[] args)
+    static void Main()
     {
-        var size = Console.ReadLine().Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries).Select(x => int.Parse(x.Trim())).ToArray();
+        var size = Console.ReadLine().Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries)
+            .Select(x => int.Parse(x.Trim()))
+            .ToArray();
         var rows = size[0];
         var cols = size[1];
-
-        var lastKnownLoc = new int[2];
 
         var playerRow = 0;
         var playerCol = 0;
@@ -34,7 +34,7 @@ class RadioactiveBunnies
 
         var commands = Console.ReadLine().ToCharArray();
 
-        var dead = false;
+        var gameOver = false;
         var won = false;
 
         foreach (var command in commands)
@@ -61,17 +61,7 @@ class RadioactiveBunnies
                     break;
             }
 
-            if (won)
-            {
-                lastKnownLoc[0] = playerRow;
-                lastKnownLoc[1] = playerCol;
-            }
-            else if (lair[playerRow][playerCol] == 'B')
-            {
-                dead = true;
-                lastKnownLoc[0] = playerRow;
-                lastKnownLoc[1] = playerCol;
-            }
+            if (won || lair[playerRow][playerCol] == 'B') gameOver = true;
             else lair[playerRow][playerCol] = 'P';
 
             for (int row = 0; row < rows; row++)
@@ -90,15 +80,10 @@ class RadioactiveBunnies
                     if (row < rows - 1) lair[row + 1][currentBunnieCol] = 'B';
                 }
 
-                if (won == false && lair[playerRow][playerCol] == 'B')
-                {
-                    dead = true;
-                    lastKnownLoc[0] = playerRow;
-                    lastKnownLoc[1] = playerCol;
-                }
+                if (won == false && lair[playerRow][playerCol] == 'B') gameOver = true;
             }
 
-            if (dead || won) break;
+            if (gameOver) break;
         }
 
         for (int i = 0; i < rows; i++)
@@ -109,6 +94,6 @@ class RadioactiveBunnies
         if (won) Console.Write("won: ");
         else Console.Write("dead: ");
 
-        Console.WriteLine(String.Join(" ", lastKnownLoc));
+        Console.WriteLine($"{playerRow} {playerCol}");
     }
 }
