@@ -3,7 +3,7 @@ using System.Linq;
 
 class RadioactiveBunnies
 {
-    static void Main()
+    static void Main(string[] args)
     {
         var size = Console.ReadLine().Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries)
             .Select(x => int.Parse(x.Trim()))
@@ -40,6 +40,7 @@ class RadioactiveBunnies
         foreach (var command in commands)
         {
             lair[playerRow][playerCol] = '.';
+
             switch (command)
             {
                 case 'L':
@@ -59,7 +60,7 @@ class RadioactiveBunnies
                     else playerRow += 1;
                     break;
             }
-            
+
             if (won || lair[playerRow][playerCol] == 'B') gameOver = true;
             else lair[playerRow][playerCol] = 'P';
 
