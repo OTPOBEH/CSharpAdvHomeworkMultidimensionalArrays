@@ -8,13 +8,13 @@ namespace TargetPractice
     {
         static void Main()
         {
-            var size    = Console.ReadLine()?.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToArray();
-            var rows    = int.Parse(size[0]);
-            var cols    = int.Parse(size[1]);
+            var size = Console.ReadLine()?.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToArray();
+            var rows = int.Parse(size[0]);
+            var cols = int.Parse(size[1]);
 
-            var wall    = new char[rows, cols];
-            var snake   = Console.ReadLine()?.ToCharArray();
-            var isEven  = true;
+            var wall = new char[rows, cols];
+            var snake = Console.ReadLine()?.ToCharArray();
+            var isEven = true;
             var counter = 0;
 
             for (int i = rows - 1; i >= 0; i--)
@@ -39,14 +39,14 @@ namespace TargetPractice
                 }
             }
 
-            var shot      = Console.ReadLine()?.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
+            var shot = Console.ReadLine()?.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
             var impactRow = shot[0];
             var impactCol = shot[1];
-            var radius    = shot[2];
+            var radius = shot[2];
 
-            var topRow    = impactRow - radius;
+            var topRow = impactRow - radius;
             var bottomRow = impactRow + radius;
-            var startCol  = impactCol;
+            var startCol = impactCol;
             counter = 0;
 
             for (int row = topRow; row <= impactRow; row++)
@@ -65,7 +65,7 @@ namespace TargetPractice
 
             for (int row = impactRow + 1; row < wall.GetLength(0) && row <= bottomRow; row++)
             {
-                for (int col = startCol; row < wall.GetLength(1) && col < startCol + counter; col++)
+                for (int col = startCol; row < wall.GetLength(1) && col < startCol + counter; col++)// грешка...
                 {
                     if (col < 0 || col >= wall.GetLength(1)) continue;
                     wall[row, col] = ' ';
@@ -73,23 +73,26 @@ namespace TargetPractice
                 startCol++;
                 counter -= 2;
             }
-
-            var printArray = new List<char>[cols];
-
-            for (int col = 0; col < cols; col++)
+            for (int col = cols - 1; col >= 0; col--)
             {
-                printArray[col] = new List<char>();
+                var tempList = new List<char>();
+
                 for (int row = rows - 1; row >= 0; row--)
                 {
                     if (wall[row, col] != ' ')
                     {
-                        printArray[col].Add(wall[row, col]);
+                        tempList.Add(wall[row, col]);
                     }
                 }
 
-                while (printArray[col].Count != cols)
+                while (tempList.Count != cols)
                 {
-                    printArray[col].Add(' ');
+                    tempList.Add(' ');
+                }
+
+                for (int row = 0; row < rows; row++)
+                {
+                    wall[row, col] = tempList[row];
                 }
             }
 
@@ -97,7 +100,7 @@ namespace TargetPractice
             {
                 for (int col = 0; col < cols; col++)
                 {
-                    Console.Write(printArray[col].ElementAt(row));
+                    Console.Write(wall[row, col]);
                 }
                 Console.WriteLine();
             }
